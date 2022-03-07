@@ -1,0 +1,1 @@
+Yew playground - nothing special

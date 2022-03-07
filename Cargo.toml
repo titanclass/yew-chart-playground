@@ -1,0 +1,11 @@
+[package]
+name = "yew-playground"
+version = "0.1.0"
+authors = ["Christopher Hunt"]
+edition = "2018"
+license = "Apache-2.0"
+
+[dependencies]
+chrono = { version = "0.4.19", features = [ "serde", "wasmbind" ] }
+yew-chart = { git = "https://github.com/titanclass/yew-chart.git", rev = "202f01ba10bb14e9242d71b11d4271e4140fffd6" }
+yew = "0.19.3"
