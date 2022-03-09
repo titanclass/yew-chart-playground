@@ -4,7 +4,7 @@ use yew::prelude::*;
 use yew_chart::{
     axis::AxisScale,
     horizontal_axis::{self, HorizontalAxis},
-    linear_axis_scale::{Labeller, LinearAxisScale},
+    linear_axis_scale::LinearAxisScale,
     vertical_axis::{self, VerticalAxis},
 };
 
@@ -15,16 +15,9 @@ const TICK_LENGTH: f32 = 10.0;
 
 #[function_component(App)]
 fn app() -> Html {
-    fn empty_labeller() -> Box<Labeller> {
-        Box::new(move |_| "".to_string())
-    }
-
     let h_scale_top = Rc::new(LinearAxisScale::new(0.0..5.0, 1.0)) as Rc<dyn AxisScale>;
-    let h_scale_bottom = Rc::new(LinearAxisScale::with_labeller(
-        0.0..5.0,
-        1.0,
-        Rc::new(empty_labeller()),
-    )) as Rc<dyn AxisScale>;
+    let h_scale_bottom =
+        Rc::new(LinearAxisScale::with_labeller(0.0..5.0, 1.0, None)) as Rc<dyn AxisScale>;
     let v_scale = Rc::new(LinearAxisScale::new(0.0..5.0, 1.0)) as Rc<dyn AxisScale>;
 
     html! {
