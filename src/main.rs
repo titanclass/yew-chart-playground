@@ -2,10 +2,8 @@ use std::rc::Rc;
 
 use yew::prelude::*;
 use yew_chart::{
-    axis::AxisScale,
-    horizontal_axis::{self, HorizontalAxis},
-    linear_axis_scale::LinearAxisScale,
-    vertical_axis::{self, VerticalAxis},
+    axis::{Axis, Orientation, Scale},
+    linear_axis_scale::LinearScale,
 };
 
 const WIDTH: f32 = 533.0;
@@ -15,40 +13,39 @@ const TICK_LENGTH: f32 = 10.0;
 
 #[function_component(App)]
 fn app() -> Html {
-    let h_scale_top = Rc::new(LinearAxisScale::new(0.0..5.0, 1.0)) as Rc<dyn AxisScale>;
-    let h_scale_bottom =
-        Rc::new(LinearAxisScale::with_labeller(0.0..5.0, 1.0, None)) as Rc<dyn AxisScale>;
-    let v_scale = Rc::new(LinearAxisScale::new(0.0..5.0, 1.0)) as Rc<dyn AxisScale>;
+    let h_scale_top = Rc::new(LinearScale::new(0.0..5.0, 1.0)) as Rc<dyn Scale>;
+    let h_scale_bottom = Rc::new(LinearScale::with_labeller(0.0..5.0, 1.0, None)) as Rc<dyn Scale>;
+    let v_scale = Rc::new(LinearScale::new(0.0..5.0, 1.0)) as Rc<dyn Scale>;
 
     html! {
         <>
         <svg class="chart" viewBox={format!("0 0 {} {}", WIDTH, HEIGHT)} preserveAspectRatio="none">
-            <VerticalAxis
+            <Axis
                 name="some-y-axis"
-                orientation={vertical_axis::Orientation::Left}
+                orientation={Orientation::Left}
                 scale={Rc::clone(&v_scale)}
-                x1={MARGIN} y1={MARGIN} y2={HEIGHT - TICK_LENGTH * 2.0}
+                x1={MARGIN} y1={MARGIN} xy2={HEIGHT - TICK_LENGTH * 2.0}
                 tick_len={TICK_LENGTH}
                 title={"Some Y thing".to_string()} />
-            <HorizontalAxis
+            <Axis
                 name="some-x-axis"
-                orientation={horizontal_axis::Orientation::Bottom}
+                orientation={Orientation::Bottom}
                 scale={Rc::clone(&h_scale_top)}
-                x1={MARGIN} y1={HEIGHT - TICK_LENGTH * 2.0} x2={WIDTH - MARGIN}
+                x1={MARGIN} y1={HEIGHT - TICK_LENGTH * 2.0} xy2={WIDTH - MARGIN}
                 tick_len={TICK_LENGTH} />
         </svg>
         <svg class="chart" viewBox={format!("0 0 {} {}", WIDTH, HEIGHT)} preserveAspectRatio="none">
-            <HorizontalAxis
+            <Axis
                 name="some-x-axis"
-                orientation={horizontal_axis::Orientation::Top}
+                orientation={Orientation::Top}
                 scale={Rc::clone(&h_scale_bottom)}
-                x1={MARGIN} y1={TICK_LENGTH} x2={WIDTH - MARGIN}
+                x1={MARGIN} y1={TICK_LENGTH} xy2={WIDTH - MARGIN}
                 tick_len={TICK_LENGTH} />
-            <VerticalAxis
+            <Axis
                 name="some-y-axis"
-                orientation={vertical_axis::Orientation::Left}
+                orientation={Orientation::Left}
                 scale={Rc::clone(&v_scale)}
-                x1={MARGIN} y1={TICK_LENGTH} y2={HEIGHT - MARGIN + TICK_LENGTH}
+                x1={MARGIN} y1={TICK_LENGTH} xy2={HEIGHT - MARGIN + TICK_LENGTH}
                 tick_len={TICK_LENGTH}
                 title={"Some Y thing".to_string()} />
         </svg>
